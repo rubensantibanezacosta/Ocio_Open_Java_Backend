@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +35,9 @@ public class PunctuationsController {
 
     @PreAuthorize("hasAnyAuthority('create:punctuations','update:punctuations')")
     @PostMapping(value = "/api/punctuations", consumes = "application/json")
+    @Transactional
     @ResponseBody
-    ResponseEntity<?> createOrUpdatePuntuation(@RequestBody String jsonPunctuation, @RequestHeader HttpHeaders headers)
-            throws JsonProcessingException {
+    ResponseEntity<?> createOrUpdatePuntuation(@RequestBody String jsonPunctuation, @RequestHeader HttpHeaders headers) {
         try {
             ObjectMapper om = new ObjectMapper();
             Punctuations punctuation = om.readValue(jsonPunctuation, Punctuations.class);
@@ -49,7 +50,7 @@ public class PunctuationsController {
                 return response;
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -71,7 +72,7 @@ public class PunctuationsController {
         try {
             return new ResponseEntity<>(punctuationsImpl.findByEvent(event_id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -82,7 +83,7 @@ public class PunctuationsController {
         try {
             return new ResponseEntity<>(punctuationsImpl.findByOrganizer(organizer), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -101,7 +102,7 @@ public class PunctuationsController {
             }
 
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

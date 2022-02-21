@@ -1,5 +1,6 @@
 package com.ocio.backend17.controllers;
 
+import com.ocio.backend17.dto.ResponseMessage;
 import com.ocio.backend17.entities.Zones;
 import com.ocio.backend17.services.ZonesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,12 @@ public class ZonesController {
 
     @PreAuthorize("hasAuthority('read:zones')")
     @GetMapping("/api/zones")
-    public ResponseEntity<List<Zones>> getAll() {
-        return new ResponseEntity(zonesImpl.getAll(), HttpStatus.OK);
+    public ResponseEntity<?> getAll() {
+
+        try {
+            return new ResponseEntity(zonesImpl.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

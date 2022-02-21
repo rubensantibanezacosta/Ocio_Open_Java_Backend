@@ -26,46 +26,65 @@ public class UsersController {
 
     @PreAuthorize("hasAuthority('read:users')")
     @GetMapping("/api/user")
-    List<Users> getAll() {
-        logger.debug("request arrived users");
-        return usersImpl.getAll();
+    ResponseEntity<?> getAll() {
+        try {
+            return new ResponseEntity<List<Users>>(usersImpl.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:users')")
     @GetMapping("/api/user/{email}")
     public ResponseEntity<?> getByEmail(@PathVariable("email") String email) {
-        if (usersImpl.getById(email).isPresent()) {
-            return new ResponseEntity<>(new UsersDto(usersImpl.getById(email).get()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new UsersDto(), HttpStatus.OK);
+        try {
+            if (usersImpl.getById(email).isPresent()) {
+                return new ResponseEntity<>(new UsersDto(usersImpl.getById(email).get()), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new UsersDto(), HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAuthority('read:users')")
     @GetMapping("/api/user/position/{email}")
     public ResponseEntity<?> getUserPositionByEmail(@PathVariable("email") String email) {
-        return new ResponseEntity<>(usersImpl.getUserPosition(email), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(usersImpl.getUserPosition(email), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('delete:users')")
     @DeleteMapping("/api/user/{email}")
     @ResponseBody
     ResponseEntity<ResponseMessage> deleteByEmail(@PathVariable("email") String email) {
-        if (usersImpl.getById(email).isPresent()) {
-            usersImpl.deleteById(email);
-            return new ResponseEntity<>(new ResponseMessage("User deleted"), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new ResponseMessage("User not found"), HttpStatus.OK);
+        try {
+            if (usersImpl.getById(email).isPresent()) {
+                usersImpl.deleteById(email);
+                return new ResponseEntity<>(new ResponseMessage("User deleted"), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new ResponseMessage("User not found"), HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAuthority('create:users')")
     @PostMapping(value = "/api/user/", consumes = "application/json")
     @ResponseBody
-    ResponseEntity<UsersDto> createOrUpdateUser(@RequestBody String jsonUser) throws JsonProcessingException {
-        ObjectMapper om = new ObjectMapper();
-        Users user = om.readValue(jsonUser, Users.class);
-        return new ResponseEntity<>(new UsersDto(usersImpl.createOrUpdate(user)), HttpStatus.CREATED);
+    ResponseEntity<?> createOrUpdateUser(@RequestBody String jsonUser) {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            Users user = om.readValue(jsonUser, Users.class);
+            return new ResponseEntity<>(new UsersDto(usersImpl.createOrUpdate(user)), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

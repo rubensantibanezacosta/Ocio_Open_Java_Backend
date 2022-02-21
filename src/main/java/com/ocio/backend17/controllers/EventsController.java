@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.transaction.Transactional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -39,23 +40,27 @@ public class EventsController {
 
     @PreAuthorize("hasAuthority('create:events')")
     @PostMapping(value = "/api/events", consumes = "application/json")
+    @Transactional
     @ResponseBody
-    ResponseEntity<?> createEvent(@RequestBody String jsonEvent, @RequestHeader HttpHeaders headers) throws JsonProcessingException, MessagingException {
+    ResponseEntity<?> createEvent(@RequestBody String jsonEvent, @RequestHeader HttpHeaders headers) {
+        try {
+            ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            Events event = om.readValue(jsonEvent, Events.class);
 
-        ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Events event = om.readValue(jsonEvent, Events.class);
+            if (event.getTittle().isEmpty() || event.getPlace().isEmpty() || event.getZone().isEmpty()) {
+                return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
 
-        if (event.getTittle().isEmpty() || event.getPlace().isEmpty() || event.getZone().isEmpty()) {
-            return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
+            } else {
+                event.setOrganizer(extractHeaderData.extractJWTUsername(headers));
+                Events createdEvent = eventsImpl.createEvent(event);
 
-        } else {
-            event.setOrganizer(extractHeaderData.extractJWTUsername(headers));
-            Events createdEvent = eventsImpl.createEvent(event);
+                emailService.newEventToOrganizer(createdEvent.getOrganizer(), createdEvent);
+                emailService.newEventToAllUsers(createdEvent.getOrganizer(), createdEvent);
 
-            emailService.newEventToOrganizer(createdEvent.getOrganizer(), createdEvent);
-            emailService.newEventToAllUsers(createdEvent.getOrganizer(), createdEvent);
-
-            return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
+                return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -63,133 +68,175 @@ public class EventsController {
     @GetMapping("/api/events/ASC")
     @ResponseBody
     ResponseEntity<?> findAllEventsAsc() {
-        return new ResponseEntity<>(eventsImpl.findAllEventsAsc(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventsImpl.findAllEventsAsc(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:events')")
     @GetMapping("/api/events/DESC")
     @ResponseBody
     ResponseEntity<?> findAllEventsDsc() {
-        return new ResponseEntity<>(eventsImpl.findAllEventsDesc(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventsImpl.findAllEventsDesc(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:events')")
     @GetMapping("/api/events/bydate/{date}")
     @ResponseBody
     ResponseEntity<?> findAllEventsByDate(@PathVariable("date") String stringdate) {
-        Date date = dateFormatterSQL.dateToSQLFormat(stringdate);
-        return new ResponseEntity<>(eventsImpl.findAllByDate(date), HttpStatus.OK);
+        try {
+            Date date = dateFormatterSQL.dateToSQLFormat(stringdate);
+            return new ResponseEntity<>(eventsImpl.findAllByDate(date), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:events')")
     @GetMapping("/api/events/byorganizer/ASC/{organizer}")
     @ResponseBody
     ResponseEntity<?> findAllEventsByOrganizerAsc(@PathVariable("organizer") String organizer) {
-        return new ResponseEntity<>(eventsImpl.findEventsByOrganizerAsc(organizer), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventsImpl.findEventsByOrganizerAsc(organizer), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:events')")
     @GetMapping("/api/events/byorganizer/DESC/{organizer}")
     @ResponseBody
     ResponseEntity<?> findAllEventsByOrganizerDesc(@PathVariable("organizer") String organizer) {
-        return new ResponseEntity<>(eventsImpl.findEventsByOrganizerDesc(organizer), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventsImpl.findEventsByOrganizerDesc(organizer), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:events')")
     @GetMapping("/api/events/byid/{event_id}")
     @ResponseBody
     ResponseEntity<?> findById(@PathVariable("event_id") Double id) {
-        if (eventsImpl.findEventById(id).isPresent()) {
-            return new ResponseEntity<>(eventsImpl.findEventById(id).get(), HttpStatus.OK);
+        try {
+            if (eventsImpl.findEventById(id).isPresent()) {
+                return new ResponseEntity<>(eventsImpl.findEventById(id).get(), HttpStatus.OK);
 
-        } else {
-            return new ResponseEntity<>(new Assistants(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new Assistants(), HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAuthority('update:events')")
     @PutMapping(value = "/api/events", consumes = "application/json")
+    @Transactional
     @ResponseBody
-    ResponseEntity<?> updateEvent(@RequestBody String jsonEvent, @RequestHeader HttpHeaders headers) throws JsonProcessingException, MessagingException {
-        ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Events event = om.readValue(jsonEvent, Events.class);
+    ResponseEntity<?> updateEvent(@RequestBody String jsonEvent, @RequestHeader HttpHeaders headers) {
+        try {
+            ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            Events event = om.readValue(jsonEvent, Events.class);
 
-        if (event.getTittle().isEmpty() || event.getPlace().isEmpty() || event.getZone().isEmpty()) {
-            return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
+            if (event.getTittle().isEmpty() || event.getPlace().isEmpty() || event.getZone().isEmpty()) {
+                return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
 
-        } else {
-            event.setOrganizer(extractHeaderData.extractJWTUsername(headers));
-            int modified = eventsImpl.updateEvent(event);
+            } else {
+                event.setOrganizer(extractHeaderData.extractJWTUsername(headers));
+                int modified = eventsImpl.updateEvent(event);
 
-            if (modified > 0) {
-                emailService.updatedEventToOrganizer(event.getOrganizer(), event);
-                emailService.updateEventToAllAssistants(event.getOrganizer(), event);
+                if (modified > 0) {
+                    emailService.updatedEventToOrganizer(event.getOrganizer(), event);
+                    emailService.updateEventToAllAssistants(event.getOrganizer(), event);
+
+                }
+                return new ResponseEntity<>(modified, HttpStatus.OK);
 
             }
-            return new ResponseEntity<>(modified, HttpStatus.OK);
-
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAuthority('adminupdate:events')")
     @PutMapping(value = "/api/events/admin", consumes = "application/json")
+    @Transactional
     @ResponseBody
-    ResponseEntity<?> updateEventAdmin(@RequestBody String jsonEvent, @RequestHeader HttpHeaders headers)
-            throws JsonProcessingException, MessagingException {
-        ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Events event = om.readValue(jsonEvent, Events.class);
+    ResponseEntity<?> updateEventAdmin(@RequestBody String jsonEvent, @RequestHeader HttpHeaders headers) {
+        try {
+            ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            Events event = om.readValue(jsonEvent, Events.class);
 
-        if (event.getTittle().isEmpty() || event.getPlace().isEmpty() || event.getZone().isEmpty()) {
-            return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
+            if (event.getTittle().isEmpty() || event.getPlace().isEmpty() || event.getZone().isEmpty()) {
+                return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
 
-        } else {
-            int modified = eventsImpl.updateEvent(event);
+            } else {
+                int modified = eventsImpl.updateEvent(event);
 
-            if (modified > 0) {
-                emailService.updatedEventToOrganizer(event.getOrganizer(), event);
-                emailService.updateEventToAllAssistants(event.getOrganizer(), event);
+                if (modified > 0) {
+                    emailService.updatedEventToOrganizer(event.getOrganizer(), event);
+                    emailService.updateEventToAllAssistants(event.getOrganizer(), event);
 
+                }
+                return new ResponseEntity<>(modified, HttpStatus.OK);
             }
-            return new ResponseEntity<>(modified, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAuthority('delete:events')")
     @DeleteMapping("/api/events/{event_id}")
+    @Transactional
     @ResponseBody
-    ResponseEntity<?> deleteById(@PathVariable("event_id") Double id, @RequestHeader HttpHeaders headers) throws MessagingException {
-        if (eventsImpl.findEventById(id).isPresent()) {
-            Events events = eventsImpl.findEventById(id).get();
+    ResponseEntity<?> deleteById(@PathVariable("event_id") Double id, @RequestHeader HttpHeaders headers) {
+        try {
+            if (eventsImpl.findEventById(id).isPresent()) {
+                Events events = eventsImpl.findEventById(id).get();
 
 
-            if (events.getOrganizer().equals(extractHeaderData.extractJWTUsername(headers))) {
-                List<Assistants> assistantsList=assistantImpl.findByEventAndAttendance(id, true);
+                if (events.getOrganizer().equals(extractHeaderData.extractJWTUsername(headers))) {
+                    List<Assistants> assistantsList = assistantImpl.findByEventAndAttendance(id, true);
 
-                int deleted = eventsImpl.updateEvent(events);
-                if (deleted > 0) {
-                    emailService.deletedEventToOrganizer(events.getOrganizer(), events);
-                    emailService.deletedEventToAllAssistants(events.getOrganizer(),events, assistantsList);
+                    int deleted = eventsImpl.updateEvent(events);
+                    if (deleted > 0) {
+                        emailService.deletedEventToOrganizer(events.getOrganizer(), events);
+                        emailService.deletedEventToAllAssistants(events.getOrganizer(), events, assistantsList);
+
+                    }
+                    return new ResponseEntity<>(eventsImpl.deleteEvent(id), HttpStatus.OK);
+
+                } else {
+                    return new ResponseEntity<>(new ResponseMessage("Only organizer cans delete his events"), HttpStatus.UNAUTHORIZED);
 
                 }
-                return new ResponseEntity<>(eventsImpl.deleteEvent(id), HttpStatus.OK);
-
-            } else {
-                return new ResponseEntity<>(new ResponseMessage("Only organizer cans delete his events"), HttpStatus.UNAUTHORIZED);
-
             }
+            return new ResponseEntity<>(new ResponseMessage("Event not found"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(new ResponseMessage("Event not found"), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('admindelete:events')")
     @DeleteMapping("/api/events/admin/{event_id}")
     @ResponseBody
     ResponseEntity<?> deleteByIdAdmin(@PathVariable("event_id") Double id, @RequestHeader HttpHeaders headers) {
-        if (eventsImpl.findEventById(id).isPresent()) {
-            Events events = eventsImpl.findEventById(id).get();
-            return new ResponseEntity<>(eventsImpl.deleteEvent(id), HttpStatus.OK);
+        try {
+            if (eventsImpl.findEventById(id).isPresent()) {
+                Events events = eventsImpl.findEventById(id).get();
+                return new ResponseEntity<>(eventsImpl.deleteEvent(id), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new ResponseMessage("Event not found"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(new ResponseMessage("Event not found"), HttpStatus.OK);
     }
 
 }

@@ -26,71 +26,98 @@ public class AssistantController {
     AssistantImpl iAsisstantImpl;
     @Autowired
     ExtractHeaderData extractHeaderData;
-  
+
 
     @PreAuthorize("hasAuthority('create:assistants')")
     @PostMapping(value = "/api/assistant", consumes = "application/json")
     @ResponseBody
-    ResponseEntity<?> createOrUpdateUser(@RequestBody String jsonAssistant, @RequestHeader HttpHeaders headers)
-            throws JsonProcessingException {
-        ObjectMapper om = new ObjectMapper();
-        Assistants assistant = om.readValue(jsonAssistant, Assistants.class);
-        if (!(assistant.getEvent_id() > 0)) {
-            return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
-        } else {
-            assistant.setAssistant(extractHeaderData.extractJWTUsername(headers));
-            
-            return new ResponseEntity<>(iAsisstantImpl.add(assistant), HttpStatus.CREATED);
+    ResponseEntity<?> createOrUpdateUser(@RequestBody String jsonAssistant, @RequestHeader HttpHeaders headers) {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            Assistants assistant = om.readValue(jsonAssistant, Assistants.class);
+            if (!(assistant.getEvent_id() > 0)) {
+                return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
+            } else {
+                assistant.setAssistant(extractHeaderData.extractJWTUsername(headers));
+
+                return new ResponseEntity<>(iAsisstantImpl.add(assistant), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAuthority('read:assistants')")
     @GetMapping("/api/assistant/bypk/{event_id}/{assistant}")
     ResponseEntity<?> getByPk(@PathVariable("event_id") Double event_id, @PathVariable("assistant") String assistant) {
-        List<Assistants> assistants = new ArrayList<>();
-        if (iAsisstantImpl.findByPk(new AssistantsPK(event_id, assistant)).isPresent()) {
-            assistants.add(iAsisstantImpl.findByPk(new AssistantsPK(event_id, assistant)).get());
+        try {
+            List<Assistants> assistants = new ArrayList<>();
+            if (iAsisstantImpl.findByPk(new AssistantsPK(event_id, assistant)).isPresent()) {
+                assistants.add(iAsisstantImpl.findByPk(new AssistantsPK(event_id, assistant)).get());
 
-            return new ResponseEntity<>(assistants,
-                    HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(assistants, HttpStatus.OK);
+                return new ResponseEntity<>(assistants,
+                        HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(assistants, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAuthority('read:assistants')")
     @GetMapping("/api/assistant/byevent/{event_id}")
-    ResponseEntity<List<Assistants>> getByEvent(@PathVariable("event_id") Double event_id) {
-        List<Assistants> assistants = new ArrayList<>();
-        return new ResponseEntity<>(iAsisstantImpl.findByEventAndAttendance(event_id, true), HttpStatus.OK);
+    ResponseEntity<?> getByEvent(@PathVariable("event_id") Double event_id) {
+        try {
+            List<Assistants> assistants = new ArrayList<>();
+            return new ResponseEntity<>(iAsisstantImpl.findByEventAndAttendance(event_id, true), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:assistants')")
     @GetMapping("/api/assistant/byeventnot/{event_id}")
-    ResponseEntity<List<Assistants>> getByEventNot(@PathVariable("event_id") Double event_id) {
-        return new ResponseEntity<>(iAsisstantImpl.findByEventAndAttendance(event_id, false), HttpStatus.OK);
+    ResponseEntity<?> getByEventNot(@PathVariable("event_id") Double event_id) {
+        try {
+            return new ResponseEntity<>(iAsisstantImpl.findByEventAndAttendance(event_id, false), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:assistants')")
     @GetMapping("/api/assistant")
-    ResponseEntity<List<Assistants>> getAll() {
-        return new ResponseEntity<>(iAsisstantImpl.findAll(), HttpStatus.OK);
+    ResponseEntity<?> getAll() {
+        try {
+            return new ResponseEntity<>(iAsisstantImpl.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('read:assistants')")
     @GetMapping("/api/assistant/count/{assistant}")
     ResponseEntity<?> countAttendees(@PathVariable("assistant") String assistant) {
-        return new ResponseEntity<>(iAsisstantImpl.countAttendees(assistant, true), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(iAsisstantImpl.countAttendees(assistant, true), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasAuthority('update:assistants')")
     @PutMapping("/api/assistant")
-    ResponseEntity<?> updateAssistant(@RequestBody String jsonAssistant, @RequestHeader HttpHeaders headers)
-            throws JsonProcessingException {
-        ObjectMapper om = new ObjectMapper();
-        Assistants assistant = om.readValue(jsonAssistant, Assistants.class);
-        assistant.setAssistant(extractHeaderData.extractJWTUsername(headers));
-        return new ResponseEntity<>(iAsisstantImpl.updateAssistant(assistant), HttpStatus.OK);
+    ResponseEntity<?> updateAssistant(@RequestBody String jsonAssistant, @RequestHeader HttpHeaders headers) {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            Assistants assistant = om.readValue(jsonAssistant, Assistants.class);
+            assistant.setAssistant(extractHeaderData.extractJWTUsername(headers));
+            return new ResponseEntity<>(iAsisstantImpl.updateAssistant(assistant), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
 }

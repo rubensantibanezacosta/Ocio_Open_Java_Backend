@@ -85,7 +85,7 @@ public class BasicAuthController {
             return new ResponseEntity<>(new ResponseMessage("Bad Credentials Null"), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(new ResponseMessage("Unknown error"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -104,6 +104,8 @@ public class BasicAuthController {
             return new ResponseEntity<>(new ResponseMessage("Bad Credentials"), HttpStatus.UNAUTHORIZED);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(new ResponseMessage("Bad Credentials"), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

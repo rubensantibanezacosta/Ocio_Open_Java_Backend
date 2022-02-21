@@ -32,7 +32,7 @@ public class ImagesController {
                 return new ResponseEntity<>(fileImpl.saveImageFile(forms.get(0)), HttpStatus.CREATED);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -42,7 +42,7 @@ public class ImagesController {
         try {
             return new ResponseEntity<>(imageImpl.getAll(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -62,7 +62,7 @@ public class ImagesController {
         try {
             return new ResponseEntity<>(fileImpl.load(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
