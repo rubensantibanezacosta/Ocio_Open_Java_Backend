@@ -149,16 +149,20 @@ public class EventsController {
                 return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
 
             } else {
-                event.setOrganizer(extractHeaderData.extractJWTUsername(headers));
-                int modified = eventsImpl.updateEvent(event);
+                if(event.getOrganizer().equals(extractHeaderData.extractJWTUsername(headers))) {
 
-                if (modified > 0) {
-                    emailService.updatedEventToOrganizer(event.getOrganizer(), event);
-                    emailService.updateEventToAllAssistants(event.getOrganizer(), event);
+                    int modified = eventsImpl.updateEvent(event);
 
+                    if (modified > 0) {
+                        emailService.updatedEventToOrganizer(event.getOrganizer(), event);
+                        emailService.updateEventToAllAssistants(event.getOrganizer(), event);
+
+                    }
+                    return new ResponseEntity<>(modified, HttpStatus.OK);
                 }
-                return new ResponseEntity<>(modified, HttpStatus.OK);
-
+                else{
+                    return new ResponseEntity<>(new ResponseMessage("Cannot edit an event of other user"), HttpStatus.UNAUTHORIZED);
+                }
             }
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

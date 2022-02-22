@@ -26,4 +26,11 @@ public class ZonesImpl implements IZones {
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "ZonesImpl{" +
+                "zonesDao=" + zonesDao +
+                '}';
+    }
 }

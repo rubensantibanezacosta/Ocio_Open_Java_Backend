@@ -23,6 +23,18 @@ public class Zones {
     @Column(name = "updatedat", nullable = false)
     private Date updatedAt;
 
+    public Zones(String id, String name, Double punctuationavg, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.punctuationavg = punctuationavg;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Zones() {
+
+    }
+
     public String getId() {
         return id;
     }
