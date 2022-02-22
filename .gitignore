@@ -31,5 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-resources/
-application.properties
+resources/**/
+*.properties
+Ocio_Open_Java_Backend/src/main/resources/application.properties

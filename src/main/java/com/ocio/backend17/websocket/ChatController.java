@@ -20,13 +20,14 @@ public class ChatController {
 
     @MessageMapping("/message")
     public void newComment(Comments comment) {
-
+  
         Comments savedComment = commentsImpl.addComment(comment);
         Comments commentToSend = commentsImpl.findbyId(savedComment.getComment_id()).get();
         simpMessagingTemplate.convertAndSend("/comments-chat/" + (int) comment.getEvent_id(), commentToSend);
     }
 
     @MessageMapping("/message_delete")
+    
     public void newCommentDelete(CommentDeleteDto commentDelete) {
         if (commentsImpl.findbyId(commentDelete.getId()).isPresent()) {
             Comments commentDeleted=commentsImpl.findbyId(commentDelete.getId()).get();
