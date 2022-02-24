@@ -16,4 +16,5 @@ public class RolesImpl implements IRoles {
     public Optional<Roles> getRole(String roleKey) {
         return rolesDao.findByRoleKey(roleKey);
     }
+
 }

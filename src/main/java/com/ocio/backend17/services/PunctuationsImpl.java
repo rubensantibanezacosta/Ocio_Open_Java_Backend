@@ -71,12 +71,12 @@ public class PunctuationsImpl implements IPunctuations {
         return punctuationsDao.findById(punctuationsPK);
     }
 
-    @Override
-    public int deleteByPk(PunctuationsPK punctuationsPK) {
-        if (punctuationsDao.findById(punctuationsPK).isPresent()) {
-            punctuationsDao.deleteById(punctuationsPK);
-            return 1;
-        }
-        return 0;
-    }
+//    @Override
+//    public int deleteByPk(PunctuationsPK punctuationsPK) {
+//        if (punctuationsDao.findById(punctuationsPK).isPresent()) {
+//            punctuationsDao.deleteById(punctuationsPK);
+//            return 1;
+//        }
+//        return 0;
+//    }
 }

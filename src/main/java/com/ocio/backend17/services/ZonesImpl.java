@@ -14,7 +14,6 @@ public class ZonesImpl implements IZones {
 
     @Override
     public List<Zones> getAll() {
-
         return (List<Zones>) zonesDao.findAll();
     }
 
@@ -27,10 +26,5 @@ public class ZonesImpl implements IZones {
 
     }
 
-    @Override
-    public String toString() {
-        return "ZonesImpl{" +
-                "zonesDao=" + zonesDao +
-                '}';
-    }
+
 }

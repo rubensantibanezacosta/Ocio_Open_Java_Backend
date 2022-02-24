@@ -17,6 +17,6 @@ public interface IPunctuations {
 
     Optional<Punctuations> findByPK(PunctuationsPK punctuationsPK);
 
-    int deleteByPk(PunctuationsPK punctuationsPK);
+//    int deleteByPk(PunctuationsPK punctuationsPK);
 
 }
