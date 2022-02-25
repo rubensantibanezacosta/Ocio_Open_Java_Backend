@@ -22,7 +22,7 @@ UsersDataSource usersDataSource;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         File file= new File(System.getProperty("user.dir") + "/src/assets/reports/UsersSReport.jasper");
         InputStream inputStream = new DataInputStream(new FileInputStream(file));
-        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream,null, usersDataSource.getUsersDataSource(usersImpl.getAll()));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream,null, usersDataSource.getUsersDataSource(usersImpl.getByLastConnection()));
         JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
 
         return stream;

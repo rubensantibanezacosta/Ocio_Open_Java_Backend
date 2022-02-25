@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 public class Config {
     @Value("${value.userrolekey}")
     private String userrolekey;
+    @Value("${value.adminrolekey}")
+    private String adminrolekey;
     @Value("${value.jwtsecret}")
     private String jwtSecret;
     @Value("${value.expirationTime}")
@@ -43,6 +45,10 @@ public class Config {
     }
 
     public Config() {
+    }
+
+    public String getAdminrolekey() {
+        return adminrolekey;
     }
 
     public String getUserrolekey() {

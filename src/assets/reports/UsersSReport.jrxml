@@ -14,62 +14,160 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="image_url" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="surname" class="java.lang.String"/>
+	<field name="punctuation_avg" class="java.lang.Double"/>
+	<field name="createdAt" class="java.sql.Date"/>
+	<field name="lastconnection" class="java.sql.Timestamp"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="136" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="164" height="126"/>
-				<imageExpression class="java.lang.String"><![CDATA["coffee.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement style="Title" x="270" y="0" width="263" height="62"/>
-				<textElement verticalAlignment="Middle" lineSpacing="Single"/>
-				<text><![CDATA[Coffee Title]]></text>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+				<text><![CDATA[Usuarios]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="303" y="62" width="196" height="22"/>
-				<textElement lineSpacing="Single">
+				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Times New Roman"/>
 				</textElement>
-				<text><![CDATA[Coffee SubTitle]]></text>
+				<text><![CDATA[Informe de usuarios]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="172" y="94" width="383" height="42"/>
-				<textElement textAlignment="Right" lineSpacing="Single">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
-			</staticText>
-			<image>
-				<reportElement x="633" y="-73" width="219" height="209"/>
-				<imageExpression class="java.lang.String"><![CDATA["coffee_stain.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="16" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" forecolor="#525151">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f9c8fa6f-d57b-4b0b-ba6f-56b41e16ad99"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IMAGEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="0" width="115" height="30" forecolor="#525151">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf4bdac4-c214-4e58-ab00-27dde0746093"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="100" height="30" forecolor="#525151">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a97cf05c-2ee0-46f6-bbc3-2c411a1dbd76"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="0" width="130" height="30" forecolor="#525151">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efd3e897-1960-44ad-969e-c38bf400571a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="100" height="30" forecolor="#525151">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70739979-83cf-4389-8d28-f4065dfba4e9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PUNTUACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="590" y="0" width="100" height="30" forecolor="#525151">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ebdb49f3-205b-40d7-9096-f5a50c69c655"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CREACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="100" height="30" forecolor="#525151">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc759083-5897-4edb-8ec5-ff10b27c8c8d"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONEXIÓN]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="15" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15"/>
+				<reportElement style="Row" mode="Opaque" x="-1" y="8" width="802" height="33"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="1" y="1" width="100" height="30">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f9c8fa6f-d57b-4b0b-ba6f-56b41e16ad99"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{image_url}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="106" y="2" width="114" height="30">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf4bdac4-c214-4e58-ab00-27dde0746093"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{email}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="231" y="1" width="100" height="30">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a97cf05c-2ee0-46f6-bbc3-2c411a1dbd76"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="340" y="2" width="131" height="30">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efd3e897-1960-44ad-969e-c38bf400571a"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{surname}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="480" y="1" width="100" height="30">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70739979-83cf-4389-8d28-f4065dfba4e9"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{punctuation_avg}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="591" y="1" width="100" height="30">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ebdb49f3-205b-40d7-9096-f5a50c69c655"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{createdAt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="700" y="2" width="100" height="30">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc759083-5897-4edb-8ec5-ff10b27c8c8d"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{lastconnection}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="6" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1"/>
 				<graphicElement>

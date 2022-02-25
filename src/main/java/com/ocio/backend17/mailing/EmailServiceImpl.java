@@ -8,11 +8,15 @@ import com.ocio.backend17.services.AssistantImpl;
 import com.ocio.backend17.services.UsersImpl;
 import com.ocio.backend17.utils.DateFormatterSQL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -57,8 +61,8 @@ public class EmailServiceImpl {
                 helper.setTo(user.getEmail());
                 helper.setSubject("Nuevo evento " + event.getTittle());
                 helper.setText("<p>" + organizer + " ha creado un nuevo evento.</p><b>Haz click <a href="
-                        + iConfig.getFrontendHost() + "/eventsbydate/"
-                        + dateFormatterSQL.timestampSQLtoShortDateString(event.getDate()) + ">aquí</a> para verlo</b>",
+                                + iConfig.getFrontendHost() + "/eventsbydate/"
+                                + dateFormatterSQL.timestampSQLtoShortDateString(event.getDate()) + ">aquí</a> para verlo</b>",
                         true);
                 emailSender.send(message);
             }
@@ -87,8 +91,8 @@ public class EmailServiceImpl {
                 helper.setTo(assistant.getAssistant());
                 helper.setSubject("Nuevo evento " + event.getTittle());
                 helper.setText("<p>" + organizer + " ha creado un nuevo evento.</p><b>Haz click <a href="
-                        + iConfig.getFrontendHost() + "/eventsbydate/"
-                        + dateFormatterSQL.timestampSQLtoShortDateString(event.getDate()) + ">aquí</a> para verlo</b>",
+                                + iConfig.getFrontendHost() + "/eventsbydate/"
+                                + dateFormatterSQL.timestampSQLtoShortDateString(event.getDate()) + ">aquí</a> para verlo</b>",
                         true);
                 emailSender.send(message);
             }
@@ -118,5 +122,21 @@ public class EmailServiceImpl {
                 emailSender.send(message);
             }
         }
+    }
+
+    public void sendUsersReportTo(String email, File file)
+            throws MessagingException {
+
+
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setFrom("Ocio Open <" + iConfig.getGoogleMail() + ">");
+        helper.setTo(email);
+        helper.setSubject("Informe de usuarios");
+        helper.setText("<h3>Informe de usuarios adjunto.</h3>", true);
+        helper.addAttachment("Informe_de_usuarios.pdf", file);
+        emailSender.send(message);
+
+
     }
 }

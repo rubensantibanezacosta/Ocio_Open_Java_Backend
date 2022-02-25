@@ -30,6 +30,9 @@ public class Users {
     @Column(name = "punctuation_avg", nullable = false, precision = 0)
     private double punctuation_avg;
     @Basic
+    @Column(name = "permissions", nullable = true, length = 2000)
+    private String permissions;
+    @Basic
     @Column(name = "createdat", nullable = false)
     private Date createdAt;
     @Basic
@@ -97,6 +100,14 @@ public class Users {
 
     public void setPunctuation_avg(double punctuationAvg) {
         this.punctuation_avg = punctuationAvg;
+    }
+
+    public String getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
     }
 
     public Date getCreatedAt() {

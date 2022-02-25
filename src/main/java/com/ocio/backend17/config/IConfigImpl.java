@@ -40,11 +40,16 @@ public class IConfigImpl implements IConfig {
 
     @Override
     public String getGoogleMail() {
-       return config.getMail();
+        return config.getMail();
     }
 
     @Override
     public String getGooglePassword() {
         return config.getPassword();
+    }
+
+    @Override
+    public String getAdminRolesKey() {
+        return config.getAdminrolekey();
     }
 }

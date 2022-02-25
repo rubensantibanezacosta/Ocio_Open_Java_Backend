@@ -31,9 +31,9 @@ public class UserDetails implements UserDetailsService {
             throws UsernameNotFoundException {
 
         Users user = iUsers.getById(username).get();
-        Roles roles = iRoles.getRole(iConfig.getUserRoleKey()).get();
+        String roles = user.getPermissions();
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        List<String> scopes = List.of(roles.getPermissions().split(","));
+        List<String> scopes = List.of(roles.split(","));
         scopes.forEach(s -> authorities.add(new SimpleGrantedAuthority(s)));
         return new User(user.getEmail(), "{noop}empty", true, true, true, true, authorities);
     }

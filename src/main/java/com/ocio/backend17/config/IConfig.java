@@ -16,4 +16,6 @@ public interface IConfig {
     String getGoogleMail();
 
     String getGooglePassword();
+
+    String getAdminRolesKey();
 }

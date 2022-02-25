@@ -1,11 +1,9 @@
 package com.ocio.backend17.reports;
 
 import com.ocio.backend17.entities.Users;
-import com.ocio.backend17.services.UsersImpl;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -46,6 +44,9 @@ public class UsersDataSource implements JRDataSource {
                 break;
             case "surname":
                 value=usersList.get(index).getSurname();
+                break;
+            case "punctuation_avg":
+                value=usersList.get(index).getPunctuation_avg();
                 break;
             case "createdAt":
                 value=usersList.get(index).getCreatedAt();

@@ -50,6 +50,11 @@ public class UsersImpl implements IUsers {
     }
 
     @Override
+    public List<Users> getByLastConnection() {
+        return usersDao.findUsersOrderByLastconnection();
+    }
+
+    @Override
     public void deleteById(String id) {
         usersDao.deleteById(id);
     }

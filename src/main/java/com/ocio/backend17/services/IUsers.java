@@ -12,6 +12,8 @@ public interface IUsers {
 
     Users createOrUpdate(Users user);
 
+    List<Users> getByLastConnection();
+
     void deleteById(String email);
 
     int getUserPosition(String email);
