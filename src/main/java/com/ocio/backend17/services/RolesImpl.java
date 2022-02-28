@@ -1,5 +1,6 @@
 package com.ocio.backend17.services;
 
+import com.ocio.backend17.config.IConfigImpl;
 import com.ocio.backend17.dao.RolesDao;
 import com.ocio.backend17.entities.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,15 @@ import java.util.Optional;
 public class RolesImpl implements IRoles {
     @Autowired
     RolesDao rolesDao;
+    @Autowired
+    IConfigImpl config;
 
     @Override
-    public Optional<Roles> getRole(String roleKey) {
-        return rolesDao.findByRoleKey(roleKey);
+    public Optional<Roles> getUserRole() {
+        return rolesDao.findByRoleKey(config.getUserRoleKey());
+    }
+    public Optional<Roles> getAdminRole(){
+        return rolesDao.findByRoleKey(config.getAdminRolesKey());
     }
 
 }

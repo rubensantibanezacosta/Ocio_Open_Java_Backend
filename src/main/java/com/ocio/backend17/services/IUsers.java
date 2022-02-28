@@ -22,4 +22,6 @@ public interface IUsers {
 
     void updateLastConnection(String email);
 
+    int updateUserPermissions(String permissions, String email);
+
 }

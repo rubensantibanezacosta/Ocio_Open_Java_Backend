@@ -87,4 +87,15 @@ public class UsersController {
         }
     }
 
+    @PreAuthorize("hasAuthority('update:users')")
+    @PutMapping(value = "/api/user/{email}", consumes = "application/json")
+    @ResponseBody
+    ResponseEntity<?> UpdateUserPermissions(@RequestBody String permissions, @PathVariable String email) {
+        try {
+            return new ResponseEntity<>(usersImpl.updateUserPermissions(permissions,email), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

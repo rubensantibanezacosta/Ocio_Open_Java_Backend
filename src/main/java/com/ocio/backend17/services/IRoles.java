@@ -5,5 +5,6 @@ import com.ocio.backend17.entities.Roles;
 import java.util.Optional;
 
 public interface IRoles {
-    Optional<Roles> getRole(String roleKey);
+    public Optional<Roles> getUserRole();
+    public Optional<Roles> getAdminRole();
 }

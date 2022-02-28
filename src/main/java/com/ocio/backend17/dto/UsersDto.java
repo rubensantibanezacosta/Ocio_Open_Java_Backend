@@ -13,6 +13,15 @@ public class UsersDto {
     private Timestamp lastconnection;
     private Date createdAt;
     private Double punctuation_avg;
+    private String permissions;
+
+    public String getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
 
     public UsersDto(Users user) {
         this.email = user.getEmail();
@@ -22,6 +31,7 @@ public class UsersDto {
         this.lastconnection = user.getLastconnection();
         this.createdAt = user.getCreatedAt();
         this.punctuation_avg = user.getPunctuation_avg();
+        this.permissions=user.getPermissions();
     }
 
     public UsersDto() {

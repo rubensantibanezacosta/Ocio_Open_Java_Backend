@@ -2,6 +2,7 @@ package com.ocio.backend17.controllers;
 
 
 import com.ocio.backend17.config.IConfigImpl;
+import com.ocio.backend17.dto.PermissionsDto;
 import com.ocio.backend17.dto.ResponseMessage;
 import com.ocio.backend17.services.RolesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class RolesController {
     @Autowired
     RolesImpl rolesImpl;
-    @Autowired
-    IConfigImpl iConfigImpl;
-    private String apiKey = iConfigImpl.getUserRoleKey();
+
 
     @PreAuthorize("hasAuthority('update:users')")
-    @GetMapping("api/roles/admin")
+    @GetMapping("/api/roles/admin")
     public ResponseEntity<?> getRoles() {
         try {
-            if (rolesImpl.getRole(apiKey).isPresent()) {
-                return new ResponseEntity<>(rolesImpl.getRole(apiKey).get(), HttpStatus.OK);
+            if (rolesImpl.getAdminRole().isPresent()) {
+                return new ResponseEntity<>(new PermissionsDto(rolesImpl.getAdminRole().get().getPermissions()), HttpStatus.OK);
             }
             return new ResponseEntity<>(new ResponseMessage("Not found"), HttpStatus.BAD_REQUEST);
 

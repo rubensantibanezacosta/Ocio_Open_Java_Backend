@@ -21,7 +21,7 @@ public class JWTUtil {
     IConfigImpl iConfigImpl;
 
     public String generateToken(UserDetails userDetails) {
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'4Z'");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateExpiration = new Date((System.currentTimeMillis() + (iConfigImpl.getExpirationTime())));
         return Jwts.builder().setSubject(userDetails.getUsername())
                 .claim("username", userDetails.getUsername())

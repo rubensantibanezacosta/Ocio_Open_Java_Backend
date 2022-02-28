@@ -14,6 +14,7 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+
 	<field name="image_url" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>

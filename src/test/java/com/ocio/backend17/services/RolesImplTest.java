@@ -36,12 +36,12 @@ class RolesImplTest {
 
     }
 
-    @Test
-    void getRole() {
-        when(rolesDao.findByRoleKey("123")).thenReturn(Optional.of(role));
-        assertEquals(rolesImpl.getRole("123").get().getRoleKey(),role.getRoleKey());
-        assertEquals(rolesImpl.getRole("123").get().getPermissions(),role.getPermissions());
-        assertEquals(rolesImpl.getRole("123").get().getCreatedAt(),role.getCreatedAt());
-        assertEquals(rolesImpl.getRole("123").get().getUpdatedAt(),role.getUpdatedAt());
-    }
+//    @Test
+//    void getRole() {
+//        when(rolesDao.findByRoleKey("123")).thenReturn(Optional.of(role));
+//        assertEquals(rolesImpl.getRole("123").get().getRoleKey(),role.getRoleKey());
+//        assertEquals(rolesImpl.getRole("123").get().getPermissions(),role.getPermissions());
+//        assertEquals(rolesImpl.getRole("123").get().getCreatedAt(),role.getCreatedAt());
+//        assertEquals(rolesImpl.getRole("123").get().getUpdatedAt(),role.getUpdatedAt());
+//    }
 }

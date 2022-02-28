@@ -19,6 +19,9 @@ public class UsersImpl implements IUsers {
     @Autowired
     DateFormatterSQL dateFormatterSQL;
 
+    @Autowired
+    RolesImpl rolesImpl;
+
     @Override
     public List<Users> getAll() {
         return (List<Users>) usersDao.findUsersOrderByPunctuacion();
@@ -44,6 +47,7 @@ public class UsersImpl implements IUsers {
             createdUser.setLastconnection(dateFormatterSQL.nowTimestampSQLFormat());
             createdUser.setCreatedAt(dateFormatterSQL.todaySQLFormat());
             createdUser.setUpdatedAt(dateFormatterSQL.todaySQLFormat());
+            createdUser.setPermissions(rolesImpl.getUserRole().get().getPermissions());
             return usersDao.save(createdUser);
         }
 
@@ -86,6 +90,21 @@ public class UsersImpl implements IUsers {
             Users oldUser = usersDao.findById(id).get();
             oldUser.setLastconnection(new Timestamp(new Date().getTime()));
             usersDao.save(oldUser);
+        }
+    }
+
+    @Override
+    public int updateUserPermissions(String permissions, String email) {
+        if (usersDao.findById(email).isPresent()) {
+
+            Users updatedUser = usersDao.findById(email).get();
+            updatedUser.setUpdatedAt(dateFormatterSQL.todaySQLFormat());
+            updatedUser.setPermissions(permissions);
+            usersDao.save(updatedUser);
+            return 1;
+
+        } else {
+           return 0;
         }
     }
 }
