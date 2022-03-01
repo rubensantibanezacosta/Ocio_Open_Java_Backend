@@ -42,28 +42,27 @@ public class JwtFilterRequest extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-            String jwt="";
+
         try {
 
                 String authorizationHeader = request.getHeader("Authorization");
                     logger.debug("Http jwt: "+authorizationHeader);
                 if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
-                    jwt = authorizationHeader.substring(7);
-                    logger.debug("Http jwt: "+jwt);
-                }
+                    String jwt = authorizationHeader.substring(7);
+                    logger.debug("Http jwt: " + jwt);
 
 
-
-                if (jwtUtil.validateToken(jwt)) {
-                    String username = jwtUtil.extractUsername(jwt);
-                    usersService.updateLastConnection(username);
-                    List<String> scopes = jwtUtil.extractScopes(jwt);
-                    Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    scopes.forEach(s -> authorities.add(new SimpleGrantedAuthority(s)));
-                    UserDetails userDetails = new User(username, "{noop}empty", true, true, true, true, authorities);
-                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,
-                            null, userDetails.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(auth);
+                    if (jwtUtil.validateToken(jwt)) {
+                        String username = jwtUtil.extractUsername(jwt);
+                        usersService.updateLastConnection(username);
+                        List<String> scopes = jwtUtil.extractScopes(jwt);
+                        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                        scopes.forEach(s -> authorities.add(new SimpleGrantedAuthority(s)));
+                        UserDetails userDetails = new User(username, "{noop}empty", true, true, true, true, authorities);
+                        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,
+                                null, userDetails.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
                 }
 
 
