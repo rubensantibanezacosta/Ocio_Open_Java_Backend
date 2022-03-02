@@ -24,7 +24,7 @@ public class Users {
     @Column(name = "image_url", nullable = false, length = 2000)
     private String image_url;
     @Basic
-    @Column(name = "role", nullable = false, length = 50)
+    @Column(name = "role", nullable = true, length = 50)
     private String role;
     @Basic
     @Column(name = "punctuation_avg", nullable = false, precision = 0)
