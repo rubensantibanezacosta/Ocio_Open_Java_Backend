@@ -14,7 +14,6 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-
 	<field name="image_url" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
@@ -29,13 +28,15 @@
 		<band height="136" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="270" y="0" width="263" height="62"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="SansSerif"/>
+				</textElement>
 				<text><![CDATA[Usuarios]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="303" y="62" width="196" height="22"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Times New Roman"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<text><![CDATA[Informe de usuarios]]></text>
 			</staticText>
@@ -51,7 +52,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f9c8fa6f-d57b-4b0b-ba6f-56b41e16ad99"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[IMAGEN]]></text>
 			</staticText>
@@ -60,7 +61,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf4bdac4-c214-4e58-ab00-27dde0746093"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[EMAIL]]></text>
 			</staticText>
@@ -69,7 +70,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a97cf05c-2ee0-46f6-bbc3-2c411a1dbd76"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
@@ -78,7 +79,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efd3e897-1960-44ad-969e-c38bf400571a"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
@@ -87,7 +88,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70739979-83cf-4389-8d28-f4065dfba4e9"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PUNTUACIÓN]]></text>
 			</staticText>
@@ -96,7 +97,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ebdb49f3-205b-40d7-9096-f5a50c69c655"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CREACIÓN]]></text>
 			</staticText>
@@ -105,7 +106,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc759083-5897-4edb-8ec5-ff10b27c8c8d"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONEXIÓN]]></text>
 			</staticText>
@@ -119,49 +120,63 @@
 					<reportElement style="Detail" x="1" y="1" width="100" height="30">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f9c8fa6f-d57b-4b0b-ba6f-56b41e16ad99"/>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{image_url}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="106" y="2" width="114" height="30">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf4bdac4-c214-4e58-ab00-27dde0746093"/>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{email}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="231" y="1" width="100" height="30">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a97cf05c-2ee0-46f6-bbc3-2c411a1dbd76"/>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="340" y="2" width="131" height="30">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efd3e897-1960-44ad-969e-c38bf400571a"/>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{surname}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="480" y="1" width="100" height="30">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70739979-83cf-4389-8d28-f4065dfba4e9"/>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{punctuation_avg}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="591" y="1" width="100" height="30">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ebdb49f3-205b-40d7-9096-f5a50c69c655"/>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{createdAt}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="700" y="2" width="100" height="30">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc759083-5897-4edb-8ec5-ff10b27c8c8d"/>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{lastconnection}]]></textFieldExpression>
 				</textField>
 			</frame>
@@ -184,21 +199,21 @@
 				<textField evaluationTime="Report">
 					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343"/>
 					<textElement verticalAlignment="Middle" lineSpacing="Single">
-						<font size="10" isBold="false"/>
+						<font fontName="SansSerif" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
-						<font size="10" isBold="false"/>
+						<font fontName="SansSerif" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
 					<textElement verticalAlignment="Middle" lineSpacing="Single">
-						<font size="10" isBold="false"/>
+						<font fontName="SansSerif" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
