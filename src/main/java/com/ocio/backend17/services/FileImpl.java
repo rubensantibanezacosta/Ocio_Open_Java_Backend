@@ -38,7 +38,7 @@ public class FileImpl implements IFile {
     public Images saveImageFile(MultipartFile file) {
         try {
             String extension = file.getOriginalFilename().split("\\.")[(file.getOriginalFilename().split("\\.").length) - 1];
-            if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png") || extension.equals("gif")) {
+            if (extension.equals("jpg") || extension.equals("bmp") ||extension.equals("WebP") || extension.equals("jpeg") || extension.equals("png") || extension.equals("gif")) {
                 Images imageCreated = new Images();
                 String setName = System.currentTimeMillis() + "." + extension;
                 imageCreated.setUrl(setName);
