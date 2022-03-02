@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
 @RestController
 public class ReportsController {
     @Autowired

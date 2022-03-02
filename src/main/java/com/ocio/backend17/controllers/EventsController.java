@@ -24,7 +24,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
 @RestController
 public class EventsController {
     @Autowired
