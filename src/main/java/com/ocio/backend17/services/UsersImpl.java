@@ -47,6 +47,7 @@ public class UsersImpl implements IUsers {
             createdUser.setLastconnection(dateFormatterSQL.nowTimestampSQLFormat());
             createdUser.setCreatedAt(dateFormatterSQL.todaySQLFormat());
             createdUser.setUpdatedAt(dateFormatterSQL.todaySQLFormat());
+            createdUser.setRole("user");
             createdUser.setPermissions(rolesImpl.getUserRole().get().getPermissions());
             return usersDao.save(createdUser);
         }
