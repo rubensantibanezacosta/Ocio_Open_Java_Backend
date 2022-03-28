@@ -52,4 +52,14 @@ public class IConfigImpl implements IConfig {
     public String getAdminRolesKey() {
         return config.getAdminrolekey();
     }
+
+    @Override
+    public String imgbbApiKey() {
+        return config.getImgbbApiKey();
+    }
+
+    @Override
+    public String imgbbUrl() {
+        return config.getImgbbUrl();
+    }
 }

@@ -18,4 +18,8 @@ public interface IConfig {
     String getGooglePassword();
 
     String getAdminRolesKey();
+
+    String imgbbApiKey();
+
+    String imgbbUrl();
 }

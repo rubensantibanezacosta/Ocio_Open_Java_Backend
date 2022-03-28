@@ -1,6 +1,7 @@
 package com.ocio.backend17.services;
 
 import com.ocio.backend17.entities.Images;
+import com.ocio.backend17.imgbb.ImagebbImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
 public class FileImpl implements IFile {
     @Autowired
     ImageImpl image;
+    @Autowired ImagebbImpl imagebbImpl;
     private Logger logger = LoggerFactory.getLogger(FileImpl.class);
     private final Path root = Paths.get("assets/gallery");
 
@@ -36,21 +38,23 @@ public class FileImpl implements IFile {
     @Transactional
     @Override
     public Images saveImageFile(MultipartFile file) {
+
         try {
             String extension = file.getOriginalFilename().split("\\.")[(file.getOriginalFilename().split("\\.").length) - 1];
             if (extension.equals("jpg") || extension.equals("bmp") ||extension.equals("WebP") || extension.equals("jpeg") || extension.equals("png") || extension.equals("gif")) {
                 Images imageCreated = new Images();
-                String setName = System.currentTimeMillis() + "." + extension;
+                String setName = imagebbImpl.postImage(file);
+                System.out.print(setName);
                 imageCreated.setUrl(setName);
 
-                Files.copy(file.getInputStream(), Path.of(System.getProperty("user.dir") + "/src/" + this.root.resolve(setName)));
+              //  Files.copy(file.getInputStream(), Path.of(System.getProperty("user.dir") + "/src/" + this.root.resolve///(setName)));
                 return image.updloadImage(imageCreated);
             } else {
                 logger.error("Extension not allowed!");
                 throw new RuntimeException("Extension not allowed!");
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
             throw new RuntimeException("Error uploading image!");
 

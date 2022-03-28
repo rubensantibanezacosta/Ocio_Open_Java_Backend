@@ -1,6 +1,6 @@
 package com.ocio.backend17.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ocio.backend17.dto.ResponseMessage;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+
 @RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class EventsController {
     @Autowired
     EventsImpl eventsImpl;
@@ -234,7 +234,6 @@ public class EventsController {
     ResponseEntity<?> deleteByIdAdmin(@PathVariable("event_id") Double id, @RequestHeader HttpHeaders headers) {
         try {
             if (eventsImpl.findEventById(id).isPresent()) {
-                Events events = eventsImpl.findEventById(id).get();
                 return new ResponseEntity<>(eventsImpl.deleteEvent(id), HttpStatus.OK);
             }
             return new ResponseEntity<>(new ResponseMessage("Event not found"), HttpStatus.OK);

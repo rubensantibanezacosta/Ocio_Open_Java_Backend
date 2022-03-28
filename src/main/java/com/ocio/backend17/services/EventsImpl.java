@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Time;
+
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,7 +81,7 @@ public class EventsImpl implements IEvents {
     @Transactional
     @Override
     public int updateEvent(Events event) {
-        DateFormat dateFormatterDate = new SimpleDateFormat("yyyy-MM-dd");
+        
         if (eventsDao.findById(event.getEvent_id()).isPresent()) {
             Events oldEvent = eventsDao.findById(event.getEvent_id()).get();
             oldEvent.setDate(event.getDate());

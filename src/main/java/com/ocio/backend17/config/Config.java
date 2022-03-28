@@ -28,6 +28,28 @@ public class Config {
     private String password;
 
 
+    @Value("${value.imgbb.apikey}")
+    private String imgbbApiKey;
+
+    @Value("${value.imgbb.upload.url}")
+    private String imgbbUrl;
+
+    public String getImgbbApiKey() {
+        return imgbbApiKey;
+    }
+
+    public void setImgbbApiKey(String imgbbApiKey) {
+        this.imgbbApiKey = imgbbApiKey;
+    }
+
+    public String getImgbbUrl() {
+        return imgbbUrl;
+    }
+
+    public void setImgbbUrl(String imgbbUrl) {
+        this.imgbbUrl = imgbbUrl;
+    }
+
     public String getMail() {
         return mail;
     }

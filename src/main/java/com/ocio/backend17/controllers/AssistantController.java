@@ -1,6 +1,6 @@
 package com.ocio.backend17.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ocio.backend17.dto.ResponseMessage;
 import com.ocio.backend17.entities.Assistants;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
-@RestController
 
+@RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class AssistantController {
     @Autowired
     AssistantImpl iAsisstantImpl;
@@ -69,7 +69,7 @@ public class AssistantController {
     @GetMapping("/api/assistant/byevent/{event_id}")
     ResponseEntity<?> getByEvent(@PathVariable("event_id") Double event_id) {
         try {
-            List<Assistants> assistants = new ArrayList<>();
+            
             return new ResponseEntity<>(iAsisstantImpl.findByEventAndAttendance(event_id, true), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseMessage("Unknown error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

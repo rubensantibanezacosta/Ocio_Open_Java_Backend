@@ -38,3 +38,11 @@ value.google.mail.password=
 
 #Frontend host
 value.frontend.host=http://localhost:4200
+
+#Max size
+spring.servlet.multipart.max-file-size=8MB
+spring.servlet.multipart.max-request-size=8MB
+
+#Image hosting
+value.imgbb.apikey=
+value.imgbb.upload.url=

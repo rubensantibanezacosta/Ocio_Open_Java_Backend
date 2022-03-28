@@ -1,6 +1,6 @@
 package com.ocio.backend17.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ocio.backend17.dto.ResponseMessage;
 import com.ocio.backend17.dto.UsersDto;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
-@RestController
 
+@RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class UsersController {
     @Autowired
     UsersImpl usersImpl;

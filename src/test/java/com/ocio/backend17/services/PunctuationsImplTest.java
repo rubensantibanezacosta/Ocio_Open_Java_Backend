@@ -3,7 +3,6 @@ package com.ocio.backend17.services;
 import com.ocio.backend17.dao.PunctuationsDao;
 import com.ocio.backend17.entities.Punctuations;
 import com.ocio.backend17.entities.PunctuationsPK;
-import com.ocio.backend17.entities.Zones;
 import com.ocio.backend17.utils.DateFormatterSQL;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

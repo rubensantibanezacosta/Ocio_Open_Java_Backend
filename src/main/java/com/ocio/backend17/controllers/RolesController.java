@@ -1,7 +1,6 @@
 package com.ocio.backend17.controllers;
 
 
-import com.ocio.backend17.config.IConfigImpl;
 import com.ocio.backend17.dto.PermissionsDto;
 import com.ocio.backend17.dto.ResponseMessage;
 import com.ocio.backend17.services.RolesImpl;
@@ -13,8 +12,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+
 @RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class RolesController {
     @Autowired
     RolesImpl rolesImpl;

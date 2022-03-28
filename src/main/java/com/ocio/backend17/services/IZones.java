@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IZones {
     List<Zones> getAll();
+    List<Zones> getAllOrderByPunctuation();
 
     public void updateZoneAvgPunctuation(String name, Double punctuation);
 }

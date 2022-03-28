@@ -1,6 +1,5 @@
 package com.ocio.backend17.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ocio.backend17.dto.ResponseMessage;
 import com.ocio.backend17.dto.ResponseMessageWithIndex;
@@ -16,10 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+
+
 @RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class CommentsController {
     @Autowired
     CommentsImpl commentsImpl;

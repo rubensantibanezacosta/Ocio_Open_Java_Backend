@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+
 @RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class ImagesController {
     @Autowired
     ImageImpl imageImpl;

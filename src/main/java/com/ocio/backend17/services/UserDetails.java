@@ -2,7 +2,6 @@ package com.ocio.backend17.services;
 
 import com.ocio.backend17.config.IConfigImpl;
 
-import com.ocio.backend17.entities.Roles;
 
 import com.ocio.backend17.entities.Users;
 import org.springframework.beans.factory.annotation.Autowired;

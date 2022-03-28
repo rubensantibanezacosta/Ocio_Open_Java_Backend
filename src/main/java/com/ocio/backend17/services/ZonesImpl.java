@@ -17,6 +17,11 @@ public class ZonesImpl implements IZones {
         return (List<Zones>) zonesDao.findAll();
     }
 
+    @Override
+    public List<Zones> getAllOrderByPunctuation() {
+        return (List<Zones>) zonesDao.findZonesOrderByPunctuacion();
+    }
+
     public void updateZoneAvgPunctuation(String id, Double punctuation) {
         if (zonesDao.existsById(id)) {
             Zones oldZone = zonesDao.findById(id).get();

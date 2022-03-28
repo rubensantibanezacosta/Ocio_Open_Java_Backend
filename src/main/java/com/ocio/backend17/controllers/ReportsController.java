@@ -7,7 +7,6 @@ import com.ocio.backend17.dto.UsersReportDto;
 import com.ocio.backend17.mailing.EmailServiceImpl;
 import com.ocio.backend17.services.UsersReportImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,8 +18,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+
 @RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class ReportsController {
     @Autowired
     UsersReportImpl usersReportImpl;
@@ -55,6 +55,7 @@ public class ReportsController {
             fos.write(fileToByteArray);
             File fileToSend=new File(System.getProperty("user.dir")+"/src/assets/temp/usersReports.pdf");
             emailService.sendUsersReportTo(emailDto.getEmail(),fileToSend);
+            fos.close();
             return new ResponseEntity<>(new ResponseMessage("Email succesfully send"),HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());

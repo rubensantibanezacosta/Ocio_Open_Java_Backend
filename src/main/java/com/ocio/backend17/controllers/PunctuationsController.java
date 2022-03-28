@@ -1,7 +1,7 @@
 package com.ocio.backend17.controllers;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ocio.backend17.dto.ResponseMessage;
 import com.ocio.backend17.entities.Punctuations;
@@ -20,8 +20,9 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+
 @RestController
+@CrossOrigin(origins = "${value.frontend.host}")
 public class PunctuationsController {
 
     @Autowired
@@ -44,10 +45,14 @@ public class PunctuationsController {
             if (!(punctuation.getPunctuation() > 0) || !(punctuation.getEvent_id() > 0)) {
                 return new ResponseEntity<>(new ResponseMessage("Fields cannot be empty"), HttpStatus.BAD_REQUEST);
             } else {
-                punctuation.setAssistant(extractHeaderData.extractJWTUsername(headers));
-                ResponseEntity response = new ResponseEntity<>(punctuationsImpl.createOrUpdate(punctuation), HttpStatus.CREATED);
-                avgPunctuationUpdater.updateAllPunctuations(punctuation.getEvent_id());
-                return response;
+                if(punctuation.getAssistant().equals(extractHeaderData.extractJWTUsername(headers))) {
+                    ResponseEntity response = new ResponseEntity<>(punctuationsImpl.createOrUpdate(punctuation), HttpStatus.CREATED);
+                    avgPunctuationUpdater.updateAllPunctuations(punctuation.getEvent_id());
+                    return response;
+                }else{
+                    return new ResponseEntity<>(new ResponseMessage("Only the assistant can manage his punctuations"), HttpStatus.UNAUTHORIZED);
+                }
+
             }
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseMessage("Unknown error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

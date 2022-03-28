@@ -51,7 +51,7 @@ public class AvgPunctuationUpdater {
             for (int j = 0; j < zoneEvents.size(); j++) {
                 totalPunctuation += zoneEvents.get(j).getPunctuationAvg();
             }
-            zonesService.updateZoneAvgPunctuation(zones.get(i).getId(), totalPunctuation);
+            zonesService.updateZoneAvgPunctuation(zones.get(i).getId(), totalPunctuation/zoneEvents.size());
         }
 
     }

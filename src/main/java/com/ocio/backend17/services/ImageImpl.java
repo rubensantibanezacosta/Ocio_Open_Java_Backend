@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +40,6 @@ public class ImageImpl implements IImages {
 
     @Override
     public Images updloadImage(Images image) {
-        DateFormat dateFormatterDate = new SimpleDateFormat("yyyy-MM-dd");
         Images imageCreated = image;
         imageCreated.setCreatedAt(dateFormatterSQL.todaySQLFormat());
         imageCreated.setUpdatedAt(dateFormatterSQL.todaySQLFormat());
