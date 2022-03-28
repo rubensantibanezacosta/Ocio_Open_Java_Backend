@@ -28,8 +28,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-@RestController
 @CrossOrigin(origins = "${value.frontend.host}")
 public class BasicAuthController {
     @Autowired

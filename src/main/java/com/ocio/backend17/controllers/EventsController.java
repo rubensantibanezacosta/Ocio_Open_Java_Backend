@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-
 @RestController
 @CrossOrigin(origins = "${value.frontend.host}")
 public class EventsController {

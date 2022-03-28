@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 
-
 @RestController
 @CrossOrigin(origins = "${value.frontend.host}")
 public class ReportsController {

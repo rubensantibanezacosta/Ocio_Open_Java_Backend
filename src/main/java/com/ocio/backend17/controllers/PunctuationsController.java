@@ -20,7 +20,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
 @CrossOrigin(origins = "${value.frontend.host}")
 public class PunctuationsController {

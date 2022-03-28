@@ -20,7 +20,6 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "${value.frontend.host}")
 public class AssistantController {
     @Autowired
     AssistantImpl iAsisstantImpl;
