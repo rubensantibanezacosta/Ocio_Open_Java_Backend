@@ -20,7 +20,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+@CrossOrigin(origins = "${value.frontend.host}")
 @RestController
 public class PunctuationsController {
 

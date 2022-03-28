@@ -27,8 +27,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.userdetails.UserDetails;
-
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+@CrossOrigin(origins = "${value.frontend.host}")
 @RestController
 public class BasicAuthController {
     @Autowired

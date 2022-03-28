@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://ocioopen.herokuapp.com")
+@CrossOrigin(origins = "${value.frontend.host}")
 @RestController
 
 public class UsersController {
